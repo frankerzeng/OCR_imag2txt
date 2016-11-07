@@ -24,7 +24,8 @@ public class Ocr {
         cmd.add("");
         cmd.add(outputFile.getName());
 //        cmd.add(LANG_OPTION);
-        cmd.add("chi_sim");
+//        cmd.add("chi_sim");
+        cmd.add("phone");
 
 
         ProcessBuilder pb = new ProcessBuilder();
@@ -36,7 +37,7 @@ public class Ocr {
         pb.redirectErrorStream(true);
 
         Process process = pb.start();
-        //tesseract.exe 1.jpg 1 -l chi_sim
+        //tesseract.exe 1.jpg 1 -l chi_sim digits
         int w = process.waitFor();
 
         //删除临时正在工作文件

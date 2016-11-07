@@ -25,21 +25,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SQLException {
 
-//        if (isNumeric("15060061785")) {
-//            System.out.println(3);
-//            return;
-//        } else {
-//            if (true) {
-//                return;
-//            }
-//        }
-
         File directory = new File("");
         Path_phone_image = directory.getAbsolutePath() + "\\58ocr\\src\\phone_image\\";
 
         sql = "select id,phone from shop_detail";
         mysqlConnect = new MysqlConnect(sql);
-        Integer times = 30;
+        Integer times = 60;
 
         try {
             resultSet = mysqlConnect.preparedStatement.executeQuery();
@@ -55,9 +46,9 @@ public class Main {
                     for (Integer i = 0; i < times; i++) {
                         phone = Img2Phone(urlPhone);
 
-                        if (phone.length() == 11 && "1".equals(phone.substring(0, 1)) && isNumeric(phone)) {
-                            System.out.println(phone.charAt(0));
-
+                        if (phone.length() == 11 && "1".equals(phone.substring(0, 1)) && isNumeric(phone)) { // 手机
+                            break;
+                        } else if (phone.length() == 13 && "-".equals(phone.substring(4, 5)) && "0".equals(phone.substring(0, 1))) { // 座机
                             break;
                         } else if (i == (times - 1)) {
                             phone = "";

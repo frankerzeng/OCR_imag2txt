@@ -52,6 +52,8 @@ public class Main {
                             break;
                         } else if (i == (times - 1)) {
                             phone = "";
+                        } else if (phone.length() == 12 && "0".equals(phone.substring(0, 1))) { //不规范的座机号，不含-
+                            break;
                         }
                     }
                 }

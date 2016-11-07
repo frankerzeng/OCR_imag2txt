@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +32,7 @@ public class Main {
         sql = "select id,phone from shop_detail";
         mysqlConnect = new MysqlConnect(sql);
         Integer times = 60;
+        String[] phoneArray = {"13", "14", "15", "17", "18"};
 
         try {
             resultSet = mysqlConnect.preparedStatement.executeQuery();
@@ -45,8 +47,9 @@ public class Main {
                     System.out.println("urlPhone   " + urlPhone);
                     for (Integer i = 0; i < times; i++) {
                         phone = Img2Phone(urlPhone);
+                        phone = phone.replace(" ", "");
 
-                        if (phone.length() == 11 && "1".equals(phone.substring(0, 1)) && isNumeric(phone)) { // 手机
+                        if (phone.length() == 11 && Arrays.asList(phoneArray).contains(phone.substring(0, 2)) && isNumeric(phone)) { // 手机
                             break;
                         } else if (phone.length() == 13 && "-".equals(phone.substring(4, 5)) && "0".equals(phone.substring(0, 1))) { // 座机
                             break;
@@ -55,6 +58,7 @@ public class Main {
                         } else if (phone.length() == 12 && "0".equals(phone.substring(0, 1))) { //不规范的座机号，不含-
                             break;
                         }
+                        System.out.println("校验结果 " + phone);
                     }
                 }
 
